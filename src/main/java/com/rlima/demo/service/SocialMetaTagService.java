@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Service
 public class SocialMetaTagService {
-    public SocialMetaTag getOpenGraphByURL(String URL) throws IOException {
+    public SocialMetaTag getOpenGraphByURL(String URL) {
         SocialMetaTag tag = new SocialMetaTag();
         try {
             Document doc = Jsoup.connect(URL).userAgent("Mozilla").get();
