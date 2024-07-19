@@ -17,7 +17,9 @@ public class SocialMetaTagController {
 
     @PostMapping("/info")
     public ResponseEntity<SocialMetaTag> getDataFromURL(@RequestParam("url") String url) {
-        SocialMetaTag socialMetaTag = service.getOpenGraphByURL(url);
-        return socialMetaTag != null ? ResponseEntity.ok(socialMetaTag) : ResponseEntity.notFound().build();
+        SocialMetaTag socialMetaTag = service.getSocialMetaTagByURL(url);
+        return socialMetaTag != null
+                ? ResponseEntity.ok(socialMetaTag)
+                : ResponseEntity.notFound().build();
     }
 }
