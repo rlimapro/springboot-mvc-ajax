@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label for="categoria">Categoria do Produto</label>
                         <select id="categoria" name="categoria" class="form-control">
-                            <option value="">Selecione</option>
+                            <option value="" hidden>Selecione</option>
                             <option th:each="c : ${categorias}" th:text="${c.titulo}" th:value="${c.id}">...</option>
                         </select>
                         <div id="error-categoria"></div>
