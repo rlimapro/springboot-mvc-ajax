@@ -1,3 +1,33 @@
+// submit from form to controller
+$("#form-add-promo").submit(function(event) {
+    // block default behavior from submit input
+    event.preventDefault();
+
+    var promocao = {};
+
+    promocao.linkPromocao = $("#linkPromocao").val();
+    promocao.descricao = $("#descricao").val();
+    promocao.preco = $("#preco").val();
+    promocao.titulo = $("#titulo").val();
+    promocao.categoria = $("#categoria").val();
+    promocao.linkImagem = $("#linkImagem").attr("src");
+
+    console.log("promocao > ", promocao);
+
+    $.ajax({
+        method: "POST",
+        url: "/promocao/save",
+        data: promocao,
+        success: function() {
+            $("#alert").addClass("alert alert-success").text("Ok! Promoção cadastrada com sucesso.");
+        },
+        error: function(xhr) {
+            console.log("> error: ", xhr.responseText);
+            $("#alert").addClass("alert alert-danger").text("Não foi possível salvar esta promoção.");
+        }
+    })
+})
+
 // function to capture the meta tags
 $("#linkPromocao").on('change', function() {
     var url = $(this).val();
