@@ -11,6 +11,7 @@ $("#form-add-promo").submit(function(event) {
     promocao.titulo = $("#titulo").val();
     promocao.categoria = $("#categoria").val();
     promocao.linkImagem = $("#linkImagem").attr("src");
+    promocao.site = $("#site").text();
 
     console.log("promocao > ", promocao);
 
