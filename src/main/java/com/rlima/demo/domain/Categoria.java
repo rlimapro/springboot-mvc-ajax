@@ -36,4 +36,11 @@ public class Categoria implements Serializable {
     public List<Promocao> getPromocoes() {
         return promocoes;
     }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "titulo='" + titulo + '\'' +
+                '}';
+    }
 }
