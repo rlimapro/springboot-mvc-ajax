@@ -20,6 +20,11 @@ $("#form-add-promo").submit(function(event) {
         url: "/promocao/save",
         data: promocao,
         success: function() {
+            $("#form-add-promo").each(function() {
+                this.reset(); // clears all data input
+            })
+            $("#linkImagem").attr("src", "/images/promo-dark.png")
+            $("#site").text("");
             $("#alert").addClass("alert alert-success").text("Ok! Promoção cadastrada com sucesso.");
         },
         error: function(xhr) {
@@ -39,7 +44,7 @@ $("#linkPromocao").on('change', function() {
             url: "/meta/info?url=" + url,
             cache: false,
             beforeSend: function() {
-                $("#alert").removeClass("alert alert-danger").text("");
+                $("#alert").removeClass("alert alert-danger alert-success").text("");
                 $("#titulo").val("");
                 $("#site").text("");
                 $("#linkImagem").attr("src", "");
