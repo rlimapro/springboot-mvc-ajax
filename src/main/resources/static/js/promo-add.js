@@ -31,6 +31,18 @@ $("#form-add-promo").submit(function(event) {
             $("#site").text("");
             $("#alert").addClass("alert alert-success").text("Ok! Promoção cadastrada com sucesso.");
         },
+        statusCode: {
+            422: function(xhr) {
+                console.log("status error: ", xhr.status);
+                var errors = $.parseJSON(xhr.responseText);
+                $.each(errors, function(key, value) {
+                   $("#" + key).addClass("is-invalid");
+                   $("#error-" + key)
+                        .addClass("invalid-feedback")
+                        .append("<span class='error-span'>" + value + "</span>")
+                });
+            }
+        },
         error: function(xhr) {
             console.log("> error: ", xhr.responseText);
             $("#alert").addClass("alert alert-danger").text("Não foi possível salvar esta promoção.");
@@ -39,10 +51,10 @@ $("#form-add-promo").submit(function(event) {
             $("#loader-form").fadeOut(800, function() {
                 $("#form-add-promo").fadeIn(250);
                 $("#loader-form").removeClass("loader");
-            })
+            });
         }
-    })
-})
+    });
+});
 
 // function to capture the meta tags
 $("#linkPromocao").on('change', function() {
@@ -79,6 +91,6 @@ $("#linkPromocao").on('change', function() {
             complete: function() {
                 $("#loader-img").removeClass("loader");
             }
-        })
+        });
     }
-})
+});
