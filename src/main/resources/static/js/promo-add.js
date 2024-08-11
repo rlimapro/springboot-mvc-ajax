@@ -20,6 +20,16 @@ $("#form-add-promo").submit(function(event) {
         url: "/promocao/save",
         data: promocao,
         beforeSend: function() {
+            // remove error messages
+            $("span").closest(".error-span").remove();
+
+            // remove bootstrap error style borders from fields
+            $("#preco").removeClass("is-invalid");
+            $("#categoria").removeClass("is-invalid");
+            $("#linkPromocao").removeClass("is-invalid");
+            $("#titulo").removeClass("is-invalid");
+
+            // enable loading animation while backend works
             $("#form-add-promo").hide();
             $("#loader-form").addClass("loader").show();
         },
@@ -27,9 +37,12 @@ $("#form-add-promo").submit(function(event) {
             $("#form-add-promo").each(function() {
                 this.reset(); // clears all data input
             })
-            $("#linkImagem").attr("src", "/images/promo-dark.png")
+            $("#linkImagem").attr("src", "/images/promo-dark.png");
             $("#site").text("");
-            $("#alert").addClass("alert alert-success").text("Ok! Promoção cadastrada com sucesso.");
+            $("#alert")
+                .removeClass("alert alert-danger")
+                .addClass("alert alert-success")
+                .text("Ok! Promoção cadastrada com sucesso.");
         },
         statusCode: {
             422: function(xhr) {
@@ -39,7 +52,7 @@ $("#form-add-promo").submit(function(event) {
                    $("#" + key).addClass("is-invalid");
                    $("#error-" + key)
                         .addClass("invalid-feedback")
-                        .append("<span class='error-span'>" + value + "</span>")
+                        .append("<span class='error-span'>" + value + "</span>");
                 });
             }
         },
@@ -76,7 +89,7 @@ $("#linkPromocao").on('change', function() {
                 console.log(data);
                 $("#titulo").val(data.title);
                 $("#site").text(data.site.replace("@", "")); /* removing the '@' from twitter:site */
-                $("#linkImagem").attr("src", data.image)
+                $("#linkImagem").attr("src", data.image);
             },
             statusCode: {
                 404: function() {
