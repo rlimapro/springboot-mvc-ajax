@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,12 @@ public class PromocaoController {
     @GetMapping("/add")
     public String abrirCadastro() {
         return "promo-add";
+    }
+
+    @GetMapping("/list")
+    public String listarPromocoes(ModelMap model) {
+        model.addAttribute("promocoes", promocaoRepository.findAllByOrderByDataCadastroDesc());
+        return "promo-list";
     }
 
     @PostMapping("/save")
