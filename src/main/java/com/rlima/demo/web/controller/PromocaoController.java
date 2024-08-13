@@ -14,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -44,6 +41,13 @@ public class PromocaoController {
         PageRequest pageRequest = PageRequest.of(0, 8);
         model.addAttribute("promocoes", promocaoRepository.findAllByOrderByDataCadastroDesc(pageRequest));
         return "promo-list";
+    }
+
+    @GetMapping("/list/ajax")
+    public String listarCards(@RequestParam(defaultValue = "1") int page, ModelMap model) {
+        PageRequest pageRequest = PageRequest.of(page, 8);
+        model.addAttribute("promocoes", promocaoRepository.findAllByOrderByDataCadastroDesc(pageRequest));
+        return "promo-card";
     }
 
     @PostMapping("/save")
