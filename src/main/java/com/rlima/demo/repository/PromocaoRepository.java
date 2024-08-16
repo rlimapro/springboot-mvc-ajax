@@ -13,7 +13,10 @@ import java.util.List;
 public interface PromocaoRepository extends JpaRepository<Promocao, Long> {
     List<Promocao> findAllByOrderByDataCadastroDesc(Pageable pageable);
 
-    @Query("SELECT p.likes from Promocao p where p.id = :id")
+    @Query("SELECT DISTINCT p.site FROM Promocao p WHERE p.site like %:site%")
+    List<String> findSiteByTerm(@Param("site") String site);
+
+    @Query("SELECT p.likes FROM Promocao p WHERE p.id = :id")
     int findLikesById(@Param("id") Long id);
 
     @Modifying
