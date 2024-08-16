@@ -22,11 +22,13 @@ $(window).scroll(function() {
 
 // request new objects with ajax
 function loadByScrollBar(pageNumber) {
+    var site = $("#autocomplete-input").val();
     $.ajax({
         method: "GET",
         url: "/promocao/list/ajax",
         data: {
-            page: pageNumber
+            page: pageNumber,
+            site: site
         },
         beforeSend: function() {
             $("#loader-img").show();
@@ -85,4 +87,31 @@ $("#autocomplete-input").autocomplete({
             }
         });
     }
+});
+
+// filtered search
+$("#autocomplete-submit").on("click", function() {
+    var site = $("#autocomplete-input").val();
+    $.ajax({
+        method: "GET",
+        url: "/promocao/site/list",
+        data: {
+            site: site
+        },
+        beforeSend: function() {
+            pageNumber = 0;
+            $("#fim-btn").hide();
+            $(".row").fadeOut(400, function() {
+                $(this).empty();
+            });
+        },
+        success: function(response) {
+            $(".row").fadeIn(250, function() {
+                $(this).append(response);
+            });
+        },
+        error: function(xhr) {
+            alert("Ops, algo deu errado: " + xhr.status + ", " + xhr.statusText);
+        }
+    })
 });

@@ -44,9 +44,15 @@ public class PromocaoController {
     }
 
     @GetMapping("/list/ajax")
-    public String listarCards(@RequestParam(defaultValue = "1") int page, ModelMap model) {
+    public String listarCards(@RequestParam(name = "page", defaultValue = "1") int page,
+                              @RequestParam(name = "site", defaultValue = "") String site,
+                              ModelMap model) {
         PageRequest pageRequest = PageRequest.of(page, 8);
-        model.addAttribute("promocoes", promocaoRepository.findAllByOrderByDataCadastroDesc(pageRequest));
+        if(site.isEmpty()) {
+            model.addAttribute("promocoes", promocaoRepository.findAllByOrderByDataCadastroDesc(pageRequest));
+        } else {
+            model.addAttribute("promocoes", promocaoRepository.findBySiteOrderByDataCadastroDesc(site, pageRequest));
+        }
         return "promo-card";
     }
 
@@ -76,6 +82,13 @@ public class PromocaoController {
     public ResponseEntity<?> autocompleteByTerm(@RequestParam("term") String term) {
         List<String> sites = promocaoRepository.findSiteByTerm(term);
         return ResponseEntity.ok(sites);
+    }
+
+    @GetMapping("/site/list")
+    public String listarPorSite(@RequestParam("site") String site, ModelMap model) {
+        PageRequest pageRequest = PageRequest.of(0, 8);
+        model.addAttribute("promocoes", promocaoRepository.findBySiteOrderByDataCadastroDesc(site, pageRequest));
+        return "promo-card";
     }
 
     @ModelAttribute("categorias")

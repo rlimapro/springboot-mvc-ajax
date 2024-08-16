@@ -1,6 +1,7 @@
 package com.rlima.demo.repository;
 
 import com.rlima.demo.domain.Promocao;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public interface PromocaoRepository extends JpaRepository<Promocao, Long> {
     List<Promocao> findAllByOrderByDataCadastroDesc(Pageable pageable);
+    Page<Promocao> findBySiteOrderByDataCadastroDesc(String site, Pageable pageable);
 
     @Query("SELECT DISTINCT p.site FROM Promocao p WHERE p.site like %:site%")
     List<String> findSiteByTerm(@Param("site") String site);
