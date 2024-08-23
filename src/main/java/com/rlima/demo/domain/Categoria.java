@@ -1,5 +1,6 @@
 package com.rlima.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class Categoria implements Serializable {
     @Column(nullable = false, unique = true)
     private String titulo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria")
     private List<Promocao> promocoes;
 

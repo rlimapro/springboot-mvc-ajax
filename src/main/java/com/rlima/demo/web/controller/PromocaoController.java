@@ -4,6 +4,8 @@ import com.rlima.demo.domain.Categoria;
 import com.rlima.demo.domain.Promocao;
 import com.rlima.demo.repository.CategoriaRepository;
 import com.rlima.demo.repository.PromocaoRepository;
+import com.rlima.demo.service.PromocaoDataTablesService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,6 +91,17 @@ public class PromocaoController {
         PageRequest pageRequest = PageRequest.of(0, 8);
         model.addAttribute("promocoes", promocaoRepository.findBySiteOrderByDataCadastroDesc(site, pageRequest));
         return "promo-card";
+    }
+
+    @GetMapping("/tabela")
+    public String showTable() {
+        return "promo-datatables";
+    }
+
+    @GetMapping("/datatables/server")
+    public ResponseEntity<?> dataTables(HttpServletRequest request) {
+        Map<String, Object> data = new PromocaoDataTablesService().execute(promocaoRepository, request);
+        return ResponseEntity.ok(data);
     }
 
     @ModelAttribute("categorias")
