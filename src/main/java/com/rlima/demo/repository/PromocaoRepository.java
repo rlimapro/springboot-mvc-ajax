@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PromocaoRepository extends JpaRepository<Promocao, Long> {
     List<Promocao> findAllByOrderByDataCadastroDesc(Pageable pageable);
     Page<Promocao> findBySiteOrderByDataCadastroDesc(String site, Pageable pageable);
+    Page<Promocao> findByPrecoLessThan(BigDecimal preco, Pageable pageable);
 
     @Query("SELECT p FROM Promocao p WHERE p.titulo like %:search% " +
             "or p.site like %:search% " +
