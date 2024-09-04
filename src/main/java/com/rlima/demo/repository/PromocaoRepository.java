@@ -15,6 +15,11 @@ public interface PromocaoRepository extends JpaRepository<Promocao, Long> {
     List<Promocao> findAllByOrderByDataCadastroDesc(Pageable pageable);
     Page<Promocao> findBySiteOrderByDataCadastroDesc(String site, Pageable pageable);
 
+    @Query("SELECT p FROM Promocao p WHERE p.titulo like %:search% " +
+            "or p.site like %:search% " +
+            "or p.categoria.titulo like %:search%")
+    Page<Promocao> findByTituloOrSiteOrCategoria(@Param("search") String search, Pageable pageable);
+
     @Query("SELECT DISTINCT p.site FROM Promocao p WHERE p.site like %:site%")
     List<String> findSiteByTerm(@Param("site") String site);
 
