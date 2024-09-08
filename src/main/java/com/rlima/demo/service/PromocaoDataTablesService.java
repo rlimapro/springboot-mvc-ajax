@@ -51,6 +51,8 @@ public class PromocaoDataTablesService {
             return repository.findByPrecoLessThan(new BigDecimal(search), pageable);
         }
 
+
+
         return repository.findByTituloOrSiteOrCategoria(search, pageable);
     }
 
