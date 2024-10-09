@@ -24,6 +24,34 @@ $(document).ready(function() {
                     }
             },
             {data: 'categoria.titulo'}
-        ]
+        ],
+        layout: {
+            topStart: {
+                buttons: [
+                    {
+                        text: 'Editar',
+                        attr: {
+                            id: 'btn-editar',
+                            type: 'button'
+                        }
+                    },
+                    {
+                        text: 'Excluir',
+                        attr: {
+                            id: 'btn-excluir',
+                            type: 'button'
+                        }
+                    }
+                ]
+            }
+        }
+    });
+
+    $("#btn-editar").on('click', function() {
+        alert('Botão para editar está funcionando!');
+    });
+
+    $("#btn-excluir").on('click', function() {
+        alert('Botão para excluir está funcionando!');
     });
 });
