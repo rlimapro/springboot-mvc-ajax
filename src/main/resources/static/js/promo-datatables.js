@@ -63,4 +63,9 @@ $(document).ready(function() {
             table.buttons().enable();
         }
     });
+
+    $('#btn-editar').on('click', function() {
+        var id = table.row(table.$('tr.selected')).data().id;
+        alert('id da linha clicada: ' + id);
+    })
 });
