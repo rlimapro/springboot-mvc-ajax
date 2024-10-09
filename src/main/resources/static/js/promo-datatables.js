@@ -55,12 +55,4 @@ $(document).ready(function() {
             $(this).addClass("selected");
         }
     });
-
-    $("#btn-editar").on('click', function() {
-        alert('Botão para editar está funcionando!');
-    });
-
-    $("#btn-excluir").on('click', function() {
-        alert('Botão para excluir está funcionando!');
-    });
 });
