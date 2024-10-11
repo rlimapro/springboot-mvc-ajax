@@ -69,8 +69,14 @@ $(document).ready(function() {
     // coordenar evento de click para botão de editar
     $('#btn-editar').on('click', function() {
         if( isRowSelected() ) {
-            var id = getPromoId();
-            alert('id da linha clicada: ' + id);
+            $('#modal-form').modal('show');
+        }
+    })
+
+    // coordernar evento de click para botão de excluir
+    $('#btn-excluir').on('click', function() {
+        if( isRowSelected() ) {
+            $('#modal-delete').modal('show');
         }
     })
 
