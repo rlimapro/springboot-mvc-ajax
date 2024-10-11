@@ -49,10 +49,12 @@ $(document).ready(function() {
         }
     });
 
+    // desabilitar botões quando clicar no cabeçalho
     $("#table-server thead").on('click', 'tr', function() {
         table.buttons().disable();
     });
 
+    // habilitar e desabilitar botões a partir de seleção de linha da tabela
     $("#table-server tbody").on('click', 'tr', function() {
         if($(this).hasClass("selected")) {
             $(this).removeClass("selected");
@@ -64,8 +66,20 @@ $(document).ready(function() {
         }
     });
 
+    // coordenar evento de click para botão de editar
     $('#btn-editar').on('click', function() {
-        var id = table.row(table.$('tr.selected')).data().id;
-        alert('id da linha clicada: ' + id);
+        if( isRowSelected() ) {
+            var id = getPromoId();
+            alert('id da linha clicada: ' + id);
+        }
     })
+
+    function getPromoId() {
+        return table.row(table.$('tr.selected')).data().id;
+    }
+
+    function isRowSelected() {
+        var trow = table.row(table.$('tr.selected'));
+        return trow.data() !== undefined;
+    }
 });
