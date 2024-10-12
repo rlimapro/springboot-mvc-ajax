@@ -80,6 +80,22 @@ $(document).ready(function() {
         }
     })
 
+    // excluir item da tabela
+    $('#btn-del-modal').on('click', function() {
+        var id = getPromoId();
+        $.ajax({
+            method: "GET",
+            url: "/promocao/delete/" + id,
+            success: function() {
+                $('#modal-delete').modal('hide');
+                table.ajax.reload();
+            },
+            error: function() {
+                alert('Ops... Ocorreu um erro, tente novamente mais tarde.')
+            }
+        })
+    })
+
     function getPromoId() {
         return table.row(table.$('tr.selected')).data().id;
     }

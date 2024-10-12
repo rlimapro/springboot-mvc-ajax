@@ -73,6 +73,12 @@ public class PromocaoController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        promocaoRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/like/{id}")
     public ResponseEntity<?> adicionarLike(@PathVariable("id") Long id) {
         promocaoRepository.updateLikes(id);
