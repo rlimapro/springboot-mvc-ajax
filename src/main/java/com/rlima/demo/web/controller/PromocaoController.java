@@ -79,6 +79,11 @@ public class PromocaoController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/edit/{id}")
+    public ResponseEntity<Promocao> getPromocao(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(promocaoRepository.findById(id).orElse(null));
+    }
+
     @PostMapping("/like/{id}")
     public ResponseEntity<?> adicionarLike(@PathVariable("id") Long id) {
         promocaoRepository.updateLikes(id);
