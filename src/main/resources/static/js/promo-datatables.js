@@ -95,7 +95,12 @@ $(document).ready(function() {
             })
 
         }
-    })
+    });
+
+    // confirmar edição de departamento
+    $('#btn-edit-modal').on('click', function() {
+
+    };)
 
     // coordernar evento de click para botão de excluir
     $('#btn-excluir').on('click', function() {

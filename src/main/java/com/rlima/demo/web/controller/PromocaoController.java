@@ -2,6 +2,7 @@ package com.rlima.demo.web.controller;
 
 import com.rlima.demo.domain.Categoria;
 import com.rlima.demo.domain.Promocao;
+import com.rlima.demo.dto.PromocaoDTO;
 import com.rlima.demo.repository.CategoriaRepository;
 import com.rlima.demo.repository.PromocaoRepository;
 import com.rlima.demo.service.PromocaoDataTablesService;
@@ -80,8 +81,21 @@ public class PromocaoController {
     }
 
     @GetMapping("/edit/{id}")
-    public ResponseEntity<Promocao> getPromocao(@PathVariable("id") Long id) {
+    public ResponseEntity<Promocao> preEditarPromocao(@PathVariable("id") Long id) {
         return ResponseEntity.ok(promocaoRepository.findById(id).orElse(null));
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editarPromocao(@Valid PromocaoDTO dto, BindingResult result) {
+        if(result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for(FieldError error : result.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.unprocessableEntity().body(errors);
+        }
+        promocaoRepository.save(dtoConverter(dto));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/like/{id}")
@@ -118,5 +132,15 @@ public class PromocaoController {
     @ModelAttribute("categorias")
     public List<Categoria> getCategorias() {
         return categoriaRepository.findAll();
+    }
+
+    private Promocao dtoConverter(PromocaoDTO dto) {
+        Promocao promo = promocaoRepository.findById(dto.getId()).get();
+        promo.setCategoria(dto.getCategoria());
+        promo.setDescricao(dto.getDescricao());
+        promo.setLinkImagem(dto.getLinkImagem());
+        promo.setPreco(dto.getPreco());
+        promo.setTitulo(dto.getTitulo());
+        return promo;
     }
 }
