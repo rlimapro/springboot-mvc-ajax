@@ -26,7 +26,7 @@ public class PromocaoDTO {
     @NotNull(message = "Uma categoria é requerida")
     private Categoria categoria;
 
-    public @NotNull Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -34,11 +34,11 @@ public class PromocaoDTO {
         this.id = id;
     }
 
-    public @NotBlank(message = "Um título é requerido") String getTitulo() {
+    public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(@NotBlank(message = "Um título é requerido") String titulo) {
+    public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
@@ -50,27 +50,27 @@ public class PromocaoDTO {
         this.descricao = descricao;
     }
 
-    public @NotBlank(message = "Uma imagem é requerida") String getLinkImagem() {
+    public String getLinkImagem() {
         return linkImagem;
     }
 
-    public void setLinkImagem(@NotBlank(message = "Uma imagem é requerida") String linkImagem) {
+    public void setLinkImagem(String linkImagem) {
         this.linkImagem = linkImagem;
     }
 
-    public @NotNull(message = "O preço é requerido") BigDecimal getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(@NotNull(message = "O preço é requerido") BigDecimal preco) {
+    public void setPreco( BigDecimal preco) {
         this.preco = preco;
     }
 
-    public @NotNull(message = "Uma categoria é requerida") Categoria getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(@NotNull(message = "Uma categoria é requerida") Categoria categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 }

@@ -92,9 +92,11 @@ public class PromocaoController {
             for(FieldError error : result.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            return ResponseEntity.unprocessableEntity().body(errors);
+            return ResponseEntity.unprocessableEntity().body(errors); // return status code 422
         }
-        promocaoRepository.save(dtoConverter(dto));
+
+        Promocao promocao = promocaoRepository.findById(dto.getId()).get();
+        promocaoRepository.save(dtoConverter(dto, promocao));
         return ResponseEntity.ok().build();
     }
 
@@ -134,13 +136,13 @@ public class PromocaoController {
         return categoriaRepository.findAll();
     }
 
-    private Promocao dtoConverter(PromocaoDTO dto) {
-        Promocao promo = promocaoRepository.findById(dto.getId()).get();
-        promo.setCategoria(dto.getCategoria());
-        promo.setDescricao(dto.getDescricao());
-        promo.setLinkImagem(dto.getLinkImagem());
-        promo.setPreco(dto.getPreco());
-        promo.setTitulo(dto.getTitulo());
-        return promo;
+    private Promocao dtoConverter(PromocaoDTO dto, Promocao promocao) {
+        promocao = promocaoRepository.findById(dto.getId()).get();
+        promocao.setCategoria(dto.getCategoria());
+        promocao.setDescricao(dto.getDescricao());
+        promocao.setLinkImagem(dto.getLinkImagem());
+        promocao.setPreco(dto.getPreco());
+        promocao.setTitulo(dto.getTitulo());
+        return promocao;
     }
 }

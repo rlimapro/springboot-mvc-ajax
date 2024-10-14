@@ -74,6 +74,11 @@ $(document).ready(function() {
                 method: "GET",
                 url: "/promocao/edit/" + id,
                 beforeSend: function() {
+                    // remove error messages
+                    $("span").closest(".error-span").remove();
+                    // remove bootstrap error style borders from fields
+                    $(".is-invalid").removeClass("is-invalid");
+                    // open edit modal
                     $('#modal-form').modal('show');
                 },
                 success: function( data ) {
@@ -99,8 +104,48 @@ $(document).ready(function() {
 
     // confirmar edição de departamento
     $('#btn-edit-modal').on('click', function() {
+        var promocao = {};
+        promocao.descricao = $("#edt_descricao").val();
+        promocao.preco = $("#edt_preco").val();
+        promocao.titulo = $("#edt_titulo").val();
+        promocao.categoria = $("#edt_categoria").val();
+        promocao.linkImagem = $("#edt_linkImagem").val();
+        promocao.id = $("#edt_id").val();
 
-    };)
+        $.ajax({
+            method: "POST",
+            url: "/promocao/edit",
+            data: promocao,
+            beforeSend: function() {
+                // remove error messages
+                $("span").closest(".error-span").remove();
+                // remove bootstrap error style borders from fields
+                $(".is-invalid").removeClass("is-invalid");
+            },
+            success: function() {
+                $("#modal-form").modal('hide');
+                table.ajax.reload();
+            },
+            statusCode: {
+                422: function(xhr) {
+                    console.log("status error: ", xhr.status);
+                    var errors = $.parseJSON(xhr.responseText);
+                    $.each(errors, function(key, value) {
+                       $("#edt_" + key).addClass("is-invalid");
+                       $("#error-" + key)
+                            .addClass("invalid-feedback")
+                            .append("<span class='error-span'>" + value + "</span>");
+                    });
+                }
+            }
+        });
+    });
+
+    // alterar imagem do componente <img> do modal de edição
+    $('#edt_linkImagem').on('change', function() {
+        var link = $(this).val();
+        $('#edt_imagem').attr('src', link);
+    });
 
     // coordernar evento de click para botão de excluir
     $('#btn-excluir').on('click', function() {
