@@ -115,3 +115,19 @@ $("#autocomplete-submit").on("click", function() {
         }
     })
 });
+
+// SSE initializer
+
+window.onload = init();
+
+function init() {
+    const evtSource = new EventSource("/promocao/notificacao");
+
+    evtSource.onopen = (event) => {
+        console.log("A conexão foi estabelecida.");
+    }
+
+    evtSource.onmessage = (event) => {
+        console.log("Nova mensagem: " + event.data);
+    }
+}
