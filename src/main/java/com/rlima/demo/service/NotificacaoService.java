@@ -37,7 +37,7 @@ public class NotificacaoService {
         this.emissores.remove(emissor);
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 35000)
     public void notificar() {
         List<Emissor> emissoresErrors = new ArrayList<>();
         this.emissores.forEach(emissor -> {

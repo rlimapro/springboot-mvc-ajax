@@ -120,6 +120,7 @@ $("#autocomplete-submit").on("click", function() {
 
 window.onload = init();
 
+var totalOfertas = new Number(0);
 function init() {
     const evtSource = new EventSource("/promocao/notificacao");
 
@@ -128,6 +129,46 @@ function init() {
     }
 
     evtSource.onmessage = (event) => {
-        console.log("Nova mensagem: " + event.data);
+        const count = event.data;
+        if(count > 0) { showButton(count); }
     }
 }
+
+function showButton(count) {
+    totalOfertas += new Number(count);
+    $('#btn-alert').show(function() {
+        $(this)
+            .attr('style', 'display:block;')
+            .text("Veja "+ totalOfertas + " nova(s) oferta(s)!");
+    });
+}
+
+$('#btn-alert').click(function() {
+    $.ajax({
+        method: "GET",
+        url: "/promocao/list/ajax",
+        data: {
+            page: 0,
+            site: ''
+        },
+        beforeSend: function() {
+            pageNumber = 0;
+            totalOfertas = 0;
+            $('#fim-btn').hide();
+            $('#loader-img').addClass('loader');
+            $('#btn-alert').attr('style', 'display:none;');
+            $('.row').fadeOut(400, function() {
+                $(this).empty();
+            });
+        },
+        success: function(response, status, xhr) {
+            $('#loader-img').hide();
+            $('.row').fadeIn(250, function() {
+                $(this).append(response);
+            });
+        },
+        error: function(error) {
+            console.log('error: ', error);
+        }
+    });
+});
